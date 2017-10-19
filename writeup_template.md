@@ -8,16 +8,18 @@ For achieving the obstacles detection (color_theresh_obstacles function) it was 
 
 Here is an example how does look the constrast between navigable terrain and obstacles
 
-![alt text][https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/obst.jpeg]
+![Obstacle](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/obst.jpeg)
 
 In order to detect rock samples, it was applied a RGB thereshold with the following ranges, respectively: lower = [90, 90, 0]  ;upper = [160, 160, 80] .
 
 The following picture shows clearly the rock detected in a binary format.
 
-![alt text][https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/rock.jpeg]
+![Rock_samples](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/rock.jpeg)
 
-#### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
+#### 2. Image processing steps to create a map of pixels identifying navigable terrain, obstacles and rock samples into a worldmap
+The process to create a map combining navigable terrain , obstacles and rock samples into a worldmap is composed by following steps:
+
+
 
 ![alt text][image2]
 ### Autonomous Navigation and Mapping
