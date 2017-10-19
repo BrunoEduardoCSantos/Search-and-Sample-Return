@@ -19,9 +19,19 @@ The following picture shows clearly the rock detected in a binary format.
 #### 2. Image processing steps to create a map of pixels identifying navigable terrain, obstacles and rock samples into a worldmap
 The process to create a map combining navigable terrain , obstacles and rock samples into a worldmap is composed by following steps:
 
+* Define the source and target points to apply transformation from rover perspective to top-side one 
+* Use that warped image and feed to theresholds obtained in previous section in order to get the map of navigable terrain, obstacles and rock samples
+* Calculate pixel values in rover-centric coords 
+* Calculate pixel values in world coords 
+* Overlay worldmap with ground truth map
+
+To visualize in further detail the first 3 steps are depicted in the following images:
+![Transf](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/Plot.jpeg)
+
+Finally, it was created a sample video of combined map of rover navigating.
+![Video](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/Plot.jpeg)
 
 
-![alt text][image2]
 ### Autonomous Navigation and Mapping
 
 #### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
