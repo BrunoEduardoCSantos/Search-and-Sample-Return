@@ -29,7 +29,7 @@ To visualize in further detail the first 3 steps are depicted in the following i
 ![Transf](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/Plot.jpeg)
 
 Finally, it was created a sample video of combined map of rover navigating.
-![Video](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/Plot.jpeg)
+![Video](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/output/test_mapping.mp4)
 
 
 ### Autonomous Navigation and Mapping
