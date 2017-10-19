@@ -28,9 +28,7 @@ The process to create a map combining navigable terrain , obstacles and rock sam
 To visualize in further detail the first 3 steps are depicted in the following images:
 ![Transf](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/Plot.jpeg)
 
-Finally, it was created a sample video of combined map of rover navigating.
-![Video](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/output/test_mapping.mp4)
-
+Finally, it was created a sample ![video](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/output/test_mapping.mp4) of combined map of rover navigating.
 
 ### Autonomous Navigation and Mapping
 
