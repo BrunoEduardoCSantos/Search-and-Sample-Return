@@ -19,11 +19,13 @@ The following picture shows clearly the rock detected in a binary format.
 #### 2. Image processing steps to create a map of pixels identifying navigable terrain, obstacles and rock samples into a worldmap
 The process to create a map combining navigable terrain , obstacles and rock samples into a worldmap is composed by following steps:
 
-* Define the source and target points to apply transformation from rover perspective to top-side one 
-* Use that warped image and feed to theresholds obtained in previous section in order to get the map of navigable terrain, obstacles and rock samples
-* Calculate pixel values in rover-centric coords 
-* Calculate pixel values in world coords 
-* Overlay worldmap with ground truth map
+* **Define source and destination points for perspective transform**
+* **Apply perspective transform** : apply coordinates transformation for a top-side view ny defining source points and prefered final destination points in order to have an alignement with world map
+* **Find the navigable terrain , rock samples and obstacles pixels**: apply a thereshold on RGB components as mention in previous section
+* **Calculate pixel values in rover-centric coords**: calculate navigable terrain and obstacle coordinates in rover centric coordinates so that rover can make decision where to navigate
+* **Calculate pixel values in world coords**: calculate navigable pixels in world map perspective resulting aligning map from perspective transform with ground truth map by rotating an angle equal to yaw angle and scale to ground truth map scale  
+* Use channels red, blue and green to overlay worldmap with world map points which rover has crossed it, where red is for obstacles, to rock samples and blue to navigable terrain
+
 
 To visualize in further detail the first 3 steps are depicted in the following images:
 ![Transf](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/Plot.jpeg)
