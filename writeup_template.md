@@ -40,7 +40,12 @@ In order to achieve **perception process** the following set of functions were u
 * **rover_coords** : convert from image coords to rover coords
 * **to_polar_coords** : convert to radial coords in rover space
 * **rotate_pix** : map rover space pixels to world space
+* **translate_pix** : scale from ground truth scale to rover camera images
+* **pix_to_world** : apply rotation and translation (and clipping)
+* **perspect_transform** : perform a perspective transform
 
+In order to achieve **decision step** the following modifications were applied (inside  **decision.py**):
+* 
 
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
