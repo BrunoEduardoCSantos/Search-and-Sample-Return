@@ -1,64 +1,64 @@
 ## Project: Search and Sample Return
-### Writeup Template: You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
 ---
-
-
-**The goals / steps of this project are the following:**  
-
-**Training / Calibration**  
-
-* Download the simulator and take data in "Training Mode"
-* Test out the functions in the Jupyter Notebook provided
-* Add functions to detect obstacles and samples of interest (golden rocks)
-* Fill in the `process_image()` function with the appropriate image processing steps (perspective transform, color threshold etc.) to get from raw images to a map.  The `output_image` you create in this step should demonstrate that your mapping pipeline works.
-* Use `moviepy` to process the images in your saved dataset with the `process_image()` function.  Include the video you produce as part of your submission.
-
-**Autonomous Navigation / Mapping**
-
-* Fill in the `perception_step()` function within the `perception.py` script with the appropriate image processing functions to create a map and update `Rover()` data (similar to what you did with `process_image()` in the notebook). 
-* Fill in the `decision_step()` function within the `decision.py` script with conditional statements that take into consideration the outputs of the `perception_step()` in deciding how to issue throttle, brake and steering commands. 
-* Iterate on your perception and decision function until your rover does a reasonable (need to define metric) job of navigating and mapping.  
-
-[//]: # (Image References)
-
-[image1]: ./misc/rover_image.jpg
-[image2]: ./calibration_images/example_grid1.jpg
-[image3]: ./calibration_images/example_rock1.jpg 
-
-## [Rubric](https://review.udacity.com/#!/rubrics/916/view) Points
-### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
-
----
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  
-
-You're reading it!
 
 ### Notebook Analysis
-#### 1. Run the functions provided in the notebook on test images (first with the test data provided, next on data you have recorded). Add/modify functions to allow for color selection of obstacles and rock samples.
-Here is an example of how to include an image in your writeup.
+#### 1. Detection of obstacles and rock samples using image processing 
 
-![alt text][image1]
+For achieving the obstacles detection (color_theresh_obstacles function) it was applied the complementary condition for obtaining navigable terrain, i.e, threshold of RGB > 160 does to identify ground pixels. 
 
-#### 1. Populate the `process_image()` function with the appropriate analysis steps to map pixels identifying navigable terrain, obstacles and rock samples into a worldmap.  Run `process_image()` on your test data using the `moviepy` functions provided to create video output of your result. 
-And another! 
+Here is an example how does look the constrast between navigable terrain and obstacles
 
-![alt text][image2]
+![Obstacle](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/obst.jpeg)
+
+In order to detect rock samples, it was applied a RGB thereshold with the following ranges, respectively: lower = [90, 90, 0]  ;upper = [160, 160, 80] .
+
+The following picture shows clearly the rock detected in a binary format.
+
+![Rock_samples](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/rock.jpeg)
+
+#### 2. Image processing steps to create a map of pixels identifying navigable terrain, obstacles and rock samples into a worldmap
+The process to create a map combining navigable terrain , obstacles and rock samples into a worldmap is composed by following steps:
+
+* Define the source and target points to apply transformation from rover perspective to top-side one 
+* Use that warped image and feed to theresholds obtained in previous section in order to get the map of navigable terrain, obstacles and rock samples
+* Calculate pixel values in rover-centric coords 
+* Calculate pixel values in world coords 
+* Overlay worldmap with ground truth map
+
+To visualize in further detail the first 3 steps are depicted in the following images:
+![Transf](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/misc/Plot.jpeg)
+
+Finally, it was created a sample ![video](https://github.com/BrunoEduardoCSantos/Search-and-Sample-Return/blob/master/output/test_mapping.mp4) of combined map of rover navigating.
+
 ### Autonomous Navigation and Mapping
 
-#### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
+#### 1. Decision and Perception steps 
 
+In order to achieve **perception process** the following set of functions were used (functions compiled in **perception.py**):
+* **color_thresh** : find the terrain pixels using rover camera images
+* **color_theresh_rock** : find the rock samples using rover camera images
+* **rover_coords** : convert from image coords to rover coords
+* **to_polar_coords** : convert to radial coords in rover space
+* **rotate_pix** : map rover space pixels to world space
+* **translate_pix** : scale from ground truth scale to rover camera images
+* **pix_to_world** : apply rotation and translation (and clipping)
+* **perspect_transform** : perform a perspective transform
 
-#### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
+In order to achieve **decision step** the following modification was applied (changed parameters **driver_rover.py**):
+* modify start and stop number of navigable pixels to 500 and 600 , respectively.
 
-**Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
+#### 2. Settings of simulator and approach taken to launch autonomous rover 
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+The simulator settings used during autonomous mode were following (resolution and graphics quality set on launch):
+* **Screen Resolution** : 800 X 600
+* **Graphic Quality** :  Good
 
+The approach taken in this project was using the two following references frames: 
+* Rover centric coordinates
+* General coordinates from top side view
 
-
-![alt text][image3]
+In order to obtain rover centric coordinates, it was applied a perspective transformation to rover camera images in order to get top-side view of rover. Afterwards, a gride of terrain was obtained to map the terrain using rover camera images. From this map, it was computed the coordinates of image using rover coordinates , where the rover was considered to be centered in the middle left of image. In this case, it could be used a rover image center coordinates. Also, it is important to mention is transformation was done considering pitch and roll equal to zero, which influence the map fidelity. Finally, to obtain an aligned reference frame with the world frame it was applied a rotation angle (yaw angle) around z-axis.
+The importance of having both reference frames is to allow the rover not be trapped in a loop or to avoid repeat search space. In further detail, one improvement could be made would be not repeat search space in order to navigate faster through environment.
+Finally, so achieve which direction rover should take, it was computed the polar angle using rover centric image coordinates and use the mean of those angles to get the direction where rover should navigate. In this step, maybe it could be used an angle gaussian distribution of most probable direction to take.
 
 
