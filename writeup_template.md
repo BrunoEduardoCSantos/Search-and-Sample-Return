@@ -54,7 +54,7 @@ The main modifications in perception process were the thereshold range to detect
 * Convert rover-centric pixel values to world coordinates
 * Update Rover worldmap 
 
-In order to achieve **decision step** the following modifications were applied (changed parameters **driver_rover.py**):
+In order to achieve **decision step** the following modifications were applied :
 * modify start and stop number of navigable pixels to 500 and 600  so that the rover doesn't stuck in the obstacle and navigates with high fidelity trhough the navigable terrain
 * in order to avoid rover weaving I implemented a condition where steer angle only changes if it differes more than 20 degrees compared to the last angle, otherwise hold the same direction 
 
