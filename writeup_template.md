@@ -46,8 +46,17 @@ In order to achieve **perception process** the following set of functions were u
 * **pix_to_world** : apply rotation and translation (and clipping)
 * **perspect_transform** : perform a perspective transform
 
-In order to achieve **decision step** the following modification was applied (changed parameters **driver_rover.py**):
-* modify start and stop number of navigable pixels to 500 and 600 , respectively.
+The main modifications in perception process were the thereshold range to detect rock samples function as well as insert the following processing steps into **perception_step** :
+* Apply perspective transform
+* Apply color threshold to identify navigable terrain/obstacles/rock samples 
+* Update Rover.vision_image (this will be displayed on left side of screen: Red channel are obstacles pixels, green are rock samples and blue is navigable terrain
+* Convert map image pixel values to rover-centric coords
+* Convert rover-centric pixel values to world coordinates
+* Update Rover worldmap 
+
+In order to achieve **decision step** the following modifications were applied (changed parameters **driver_rover.py**):
+* modify start and stop number of navigable pixels to 500 and 600  so that the rover doesn't stuck in the obstacle and navigates with high fidelity trhough the navigable terrain
+* in order to avoid rover weaving I implemented a condition where steer angle only changes if it differes more than 20 degrees compared to the last angle, otherwise hold the same direction 
 
 #### 2. Settings of simulator and approach taken to launch autonomous rover 
 
