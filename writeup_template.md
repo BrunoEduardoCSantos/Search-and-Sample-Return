@@ -44,18 +44,21 @@ In order to achieve **perception process** the following set of functions were u
 * **pix_to_world** : apply rotation and translation (and clipping)
 * **perspect_transform** : perform a perspective transform
 
-In order to achieve **decision step** the following modifications were applied (inside  **decision.py**):
-* 
+In order to achieve **decision step** the following modification was applied (changed parameters **driver_rover.py**):
+* modify start and stop number of navigable pixels to 500 and 600 , respectively.
 
+#### 2. Settings of simulator and approach taken to launch autonomous rover 
 
-#### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
+The simulator settings used during autonomous mode were following (resolution and graphics quality set on launch):
+* **Screen Resolution** : 800 X 600
+* **Graphic Quality** :  Good
 
-**Note: running the simulator with different choices of resolution and graphics quality may produce different results, particularly on different machines!  Make a note of your simulator settings (resolution and graphics quality set on launch) and frames per second (FPS output to terminal by `drive_rover.py`) in your writeup when you submit the project so your reviewer can reproduce your results.**
+The approach taken in this project was using the two following references frames: 
+* Rover centric coordinates
+* General coordinates from top side view
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
-
-
-![alt text][image3]
+In order to obtain rover centric coordinates, it was applied a perspective transformation to rover camera images in order to get top-side view of rover. Afterwards, a gride of terrain was obtained to map the terrain using rover camera images. From this map, it was computed the coordinates of image using rover coordinates , where the rover was considered to be centered in the middle left of image. In this case, it could be used a rover image center coordinates. Also, it is important to mention is transformation was done considering pitch and roll equal to zero, which influence the map fidelity. Finally, to obtain an aligned reference frame with the world frame it was applied a rotation angle (yaw angle) around z-axis.
+The importance of having both reference frames is to allow the rover not be trapped in a loop or to avoid repeat search space. In further detail, one improvement could be made would be not repeat search space in order to navigate faster through environment.
+Finally, so achieve which direction rover should take, it was computed the polar angle using rover centric image coordinates and use the mean of those angles to get the direction where rover should navigate. In this step, maybe it could be used an angle gaussian distribution of most probable direction to take.
 
 
