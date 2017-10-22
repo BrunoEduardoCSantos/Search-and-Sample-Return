@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 # This is where you can build a decision tree for determining throttle, brake and steer 
 # commands based on the output of the perception_step() function
@@ -7,11 +8,12 @@ def decision_step(Rover):
     # Implement conditionals to decide what to do given perception data
     # Here you're all set up with some basic functionality but you'll need to
     # improve on this decision tree to do a good job of navigating autonomously!
-
+    angle = 0
     # Check if we have vision data to make decisions with
     if Rover.nav_angles is not None:
         # Check for Rover.mode status
         if Rover.mode == 'forward': 
+            
             # Check the extent of navigable terrain
             if len(Rover.nav_angles) >= Rover.stop_forward:  
                 # If mode is forward, navigable terrain looks good 
@@ -20,20 +22,30 @@ def decision_step(Rover):
                 if Rover.vel < Rover.max_vel:
                     # Set throttle value to throttle setting
                     Rover.throttle = Rover.throttle_set
-
-                # Set steering to average angle clipped to the range +/- 15
-                Rover.brake = 0
-                Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
+                Rover.steer = angle
+                if (math.fabs(np.mean(Rover.nav_angles * 180/np.pi) - angle ) >=20):
+                        Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
+                        angle = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
+               
                 
+                Rover.brake=0
+                # Set steering to average angle clipped to the range +/- 15
+                
+          
+                  
                 
             # If there's a lack of navigable terrain pixels then go to 'stop' mode
-            elif len(Rover.nav_angles) < Rover.stop_forward:
+            elif (len(Rover.nav_angles) < Rover.stop_forward) :
                     # Set mode to "stop" and hit the brakes!
                     Rover.throttle = 0
                     # Set brake to stored brake value
                     Rover.brake = Rover.brake_set
                     Rover.steer = 0
                     Rover.mode = 'stop'
+        
+                  
+            
+                  
             
         
            
@@ -41,6 +53,7 @@ def decision_step(Rover):
         elif Rover.mode == 'stop':
             # If we're in stop mode but still moving keep braking
             if Rover.vel > 0.2:
+               
                 Rover.throttle = 0
                 Rover.brake = Rover.brake_set
                 Rover.steer = 0
@@ -63,6 +76,13 @@ def decision_step(Rover):
                     # Set steer to mean angle
                     Rover.steer = np.clip(np.mean(Rover.nav_angles * 180/np.pi), -15, 15)
                     Rover.mode = 'forward'
+                
+         
+
+            
+                 
+            
+            
     # Just to make the rover do something 
     # even if no modifications have been made to the code
     else:
