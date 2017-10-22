@@ -1,8 +1,5 @@
-[//]: # (Image References)
-[image_0]: ./misc/rover_image.jpg
-[![Udacity - Robotics NanoDegree Program](https://s3-us-west-1.amazonaws.com/udacity-robotics/Extra+Images/RoboND_flag.png)](https://www.udacity.com/robotics)
-# Search and Sample Return Project
 
+# Search and Sample Return Project
 
 ![alt text][image_0] 
 
@@ -45,10 +42,5 @@ python drive_rover.py
 ```  
 
 Then launch the simulator and choose "Autonomous Mode".  The rover should drive itself now!  It doesn't drive that well yet, but it's your job to make it better!  
-
-**Note: running the simulator with different choices of resolution and graphics quality may produce different results!  Make a note of your simulator settings in your writeup when you submit the project.**
-
-### Project Walkthrough
-If you're struggling to get started on this project, or just want some help getting your code up to the minimum standards for a passing submission, we've recorded a walkthrough of the basic implementation for you but **spoiler alert: this [Project Walkthrough Video](https://www.youtube.com/watch?v=oJA6QHDPdQw) contains a basic solution to the project!**.
 
 
