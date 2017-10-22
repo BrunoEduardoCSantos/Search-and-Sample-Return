@@ -32,7 +32,15 @@ Finally, it was created a sample ![video](https://github.com/BrunoEduardoCSantos
 
 ### Autonomous Navigation and Mapping
 
-#### 1. Fill in the `perception_step()` (at the bottom of the `perception.py` script) and `decision_step()` (in `decision.py`) functions in the autonomous mapping scripts and an explanation is provided in the writeup of how and why these functions were modified as they were.
+#### 1. Decision and Perception steps 
+
+In order to achieve **perception process** the following set of functions were used (functions compiled in **perception.py**):
+* **color_thresh** : find the terrain pixels using rover camera images
+* **color_theresh_rock** : find the rock samples using rover camera images
+* **rover_coords** : convert from image coords to rover coords
+* **to_polar_coords** : convert to radial coords in rover space
+* **rotate_pix** : map rover space pixels to world space
+
 
 
 #### 2. Launching in autonomous mode your rover can navigate and map autonomously.  Explain your results and how you might improve them in your writeup.  
